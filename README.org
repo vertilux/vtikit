@@ -1,0 +1,110 @@
+#+TITLE: Vtikit
+#+AUTHOR: Jose Perez
+#+EMAIL: jose.perez@vertilux.com
+#+EXPORT_FILE_NAME: ./docs/index.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css">
+#+OPTIONS: num:nil
+
+Vtikit is the official Ruby library for Vertilux's API. It supports everything the API can do with simple interface written in Ruby.
+
+[[https://badge.fury.io/rb/vtikit.svg]]
+
+
+** Installation
+Add this line to your application's Gemfile:
+
+#+begin_src ruby
+gem 'vtikit'
+#+end_src
+
+And then execute:
+
+#+begin_src bash
+$ bundle install
+#+end_src
+
+Or install it yourself as:
+
+#+begin_src bash
+$ gem install vtikit
+#+end_src
+
+** Usage
+You'll need to generate an access key in Vertilux's application. If you already have an account in Vertilux's app you can get your key by simply visit =https://erp.vertilux.com/api_key.json= or run from your terminal:
+#+begin_src bash
+curl --request GET \
+  --url https://erp.vertilux.com/api_key \
+  --header 'Content-Type: application/json' \
+  --user 'YOUR_EMAIL_ADDRESS'
+#+end_src
+
+*Output*
+#+begin_example
+{
+    "first_name": "Jose",
+    "last_name": "Perez",
+    "email": "jose.perez@example.com",
+    "api_key": "YOUR_API_KEY",
+    "your_ip_addr": "127.0.0.1"
+}
+#+end_example
+
+
+** Resources and actions
+
+*** Inventory
+#+begin_src ruby
+client.inventory.catalog
+client.inventory.uoms
+client.inventory.uom(item)
+#+end_src
+
+*** Items
+#+begin_src ruby
+client.items.list
+client.items.retreive(id)
+client.items.label(barcode)
+#+end_src
+
+*** Orders
+#+begin_src ruby
+client.orders.create()
+#+end_src
+
+*Payload*
+#+begin_example
+{
+    "name": "Jose Perez",
+    "address": "7290 NW 35th Terrace , Miami, Florida 33122",
+    "shipvia": "Delivery",
+    "description": "Your order description",
+    "po_number": "PO666",
+    "line_items_attributes": [
+        {
+            "itemno": "00053900100",
+            "quantity": 5,
+            "uom": "ROLL"
+        },
+        {
+            "itemno": "00053900200",
+            "quantity": 5,
+            "uom": "ROLL"
+        }
+    ]
+}
+#+end_example
+
+*** Sales
+#+begin_src ruby
+client.sales.history
+#+end_src
+
+** Contributing
+
+Everyone is encouraged to help improve this project. Bug reports and pull requests are welcome at [[https://github.com/vertilux/vtikit/pulls]].
+Feel free to open an [[https://github.com/vertilux/vtikit/issues][issues]] to get feedback on your idea before spending too much time on it.
+
+** License
+
+The gem is available as open source under the terms of the [[https://opensource.org/licenses/MIT][MIT License]].
